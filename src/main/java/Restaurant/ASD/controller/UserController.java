@@ -1,7 +1,10 @@
 package Restaurant.ASD.controller;
 
 
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import Restaurant.ASD.exception.UserNotFoundException;
@@ -53,6 +56,18 @@ public class UserController {
         userRepository.deleteById(id);
         return  "User with id "+id+" has been deleted success.";
     }
+
+    @PostMapping("/login")
+public ResponseEntity<?> loginUser(@RequestBody Map<String, String> loginData) {
+    String email = loginData.get("email");
+    String password = loginData.get("password");
+    User user = userRepository.findByEmail(email);
+    if (user != null && user.getPassword().equals(password)) {
+        return ResponseEntity.ok(user);
+    } else {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email or password");
+    }
+}
 
 
 
