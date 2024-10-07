@@ -10,11 +10,19 @@ jobs:
   - job: 'Build_Backend'
     displayName: 'Build and Test Spring Boot Backend'
     steps:
+      # Install JDK 17
+      - task: UseJavaVersion@1
+        inputs:
+          versionSpec: '17'
+          jdkArchitecture: 'x64'
+
+      # Cache Maven dependencies
       - task: Cache@2
         inputs:
           key: 'maven | "$(Agent.OS)" | pom.xml'
           path: $(MavenCacheFolder)
 
+      # Run Maven build and tests
       - task: Maven@3
         inputs:
           mavenPomFile: 'pom.xml'
