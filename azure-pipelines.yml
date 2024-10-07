@@ -1,8 +1,3 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
 trigger:
   branches:
     include:
@@ -15,12 +10,19 @@ jobs:
   - job: 'Build_Backend'
     displayName: 'Build and Test Spring Boot Backend'
     steps:
+      - task: Cache@2
+        inputs:
+          key: 'maven | "$(Agent.OS)" | pom.xml'
+          path: $(MavenCacheFolder)
+
       - task: Maven@3
         inputs:
           mavenPomFile: 'pom.xml'
           goals: 'clean install'
+          options: '-Dmaven.repo.local=$(MavenCacheFolder)'
 
       - task: Maven@3
         inputs:
           mavenPomFile: 'pom.xml'
           goals: 'test'
+          options: '-Dmaven.repo.local=$(MavenCacheFolder)'
