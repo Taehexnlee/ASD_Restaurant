@@ -1,0 +1,23 @@
+trigger:
+  branches:
+    include:
+      - main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+jobs:
+  - job: 'Build_Frontend'
+    displayName: 'Build and Test React Frontend'
+    steps:
+      - task: NodeTool@0
+        inputs:
+          versionSpec: '14.x'
+      - script: |
+          npm install
+          npm run build
+        displayName: 'Build React Application'
+
+      - script: |
+          npm test -- --maxWorkers=2 --watchAll=false --detectOpenHandles
+        displayName: 'Run Frontend Tests'

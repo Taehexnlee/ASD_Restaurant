@@ -1,0 +1,101 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+/* Light Mode */
+body.light-mode, .App.light-mode {
+  background-color: #f8f9fa; /* Light background */
+  color: #212529; /* Dark text */
+}
+
+.container.light-mode {
+  background-color: #ffffff; /* Light mode container background */
+}
+
+/* Dark Mode */
+body.dark-mode, .App.dark-mode {
+  background-color: #121212; /* Dark background */
+  color: #f8f9fa; /* Light text */
+}
+
+.container.dark-mode {
+  background-color: #1c1c1c; /* Dark mode container background */
+}
+
+.navbar-dark .navbar-brand {
+  color: #f8f9fa !important;
+}
+
+.navbar-light .navbar-brand {
+  color: #212529 !important;
+}
+
+.card {
+  transition: all 0.3s ease-in-out;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+.dark-mode .card {
+  background-color: #343a40; /* Dark card background */
+  color: #f8f9fa; /* Light text */
+}
+
+.light-mode .card {
+  background-color: #ffffff; /* Light card background */
+  color: #212529; /* Dark text */
+}
+
+/* Ensure a smooth transition between modes */
+body {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.App {
+  min-height: 100vh; /* Ensure the app stretches to full height */
+}
+.card {
+  transition: all 0.3s ease-in-out;
+  cursor: pointer; /* Shows pointer to indicate card is clickable */
+}
+
+.card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adds a subtle shadow on hover */
+}
