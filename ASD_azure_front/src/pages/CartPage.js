@@ -1,8 +1,10 @@
 import React from 'react';
 import { useUser } from '../context/UserContext';
+import { useNavigate } from 'react-router-dom'; // Hook for navigation
 
 export default function CartPage() {
   const { cart, updateCartItemQuantity, removeFromCart } = useUser();
+  const navigate = useNavigate(); // Hook for navigating between pages
 
   // Calculate the total price
   const totalPrice = cart.reduce((total, item) => total + item.price * item.quantity, 0);
@@ -12,6 +14,11 @@ export default function CartPage() {
 
   const handleQuantityChange = (productId, quantity) => {
     updateCartItemQuantity(productId, quantity);
+  };
+
+  // Navigate to CheckoutPage on button click
+  const handleProcessClick = () => {
+    navigate('/checkout'); // Navigate to the checkout page
   };
 
   return (
@@ -38,7 +45,6 @@ export default function CartPage() {
                   />
                 </div>
                 <p className="mt-2"><strong>Subtotal:</strong> ${product.price * product.quantity}</p>
-                {/* Delete button */}
                 <button
                   className="btn btn-danger mt-2"
                   onClick={() => removeFromCart(product.id)}
@@ -52,6 +58,13 @@ export default function CartPage() {
           <h4>Total Price: ${totalPrice.toFixed(2)}</h4>
         </div>
       )}
+
+      {/* Process Button: Navigate to Checkout Page */}
+      <div className="text-end mt-4">
+        <button className="btn btn-primary" onClick={handleProcessClick}>
+          Process
+        </button>
+      </div>
     </div>
   );
 }
