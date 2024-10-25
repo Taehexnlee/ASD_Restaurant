@@ -15,6 +15,7 @@ import ViewUser from './Users/ViewUser';
 import { UserProvider } from './context/UserContext';
 import CartPage from './pages/CartPage';
 import Login from './Users/Login';
+import CheckoutPage from './pages/CheckoutPage';
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
@@ -40,6 +41,7 @@ function App() {
             <Route exact path='/addproduct' element={<AddProduct />} />
             <Route exact path='/editproduct/:id' element={<EditProduct />} />
             <Route exact path='/viewproduct/:id' element={<ViewProduct />} />
+            <Route exact path='/checkout' element={<CheckoutPage />} />
           </Routes>
         </Router>
       </div>
