@@ -9,7 +9,7 @@ export const UserProvider = ({ children }) => {
   const [cart, setCart] = useState([]); // Store the cart items
 
   const login = (userInfo) => {
-    const isAdmin = userInfo.name === '1234' && userInfo.username === '1234' && userInfo.email === '1234';
+    const isAdmin = userInfo.name === '1234' && userInfo.username === '1234' && userInfo.email === '1234@1234';
     setUser({ ...userInfo, isAdmin });
   };
 

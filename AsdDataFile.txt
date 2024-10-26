@@ -20,8 +20,17 @@ CREATE TABLE product (
     category VARCHAR(100)
 );
 
+CREATE TABLE access_log (
+	id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    user_id BIGINT NOT NULL,
+    `date` datetime NOT NULL,
+    description TEXT,
+    CONSTRAINT `fk__access_log__user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE
+);
+
 TRUNCATE TABLE user;
 TRUNCATE TABLE product;
+TRUNCATE TABLE access_log;
 
 
 INSERT INTO user (name, username, email, password) VALUES
@@ -140,3 +149,13 @@ INSERT INTO product (name, description, price, category) VALUES
 ('Rice Paper Spring Rolls', 'Fresh vegetables wrapped in rice paper, served with peanut sauce.', 7.99, 'Gluten-Free'),
 ('Baked Salmon', 'Baked salmon served with lemon and herbs.', 16.99, 'Gluten-Free'),
 ('Gluten-Free Brownies', 'Fudgy chocolate brownies made with gluten-free ingredients.', 5.49, 'Gluten-Free');
+
+INSERT INTO `access_log` VALUES 
+(1, 1,'2024-09-29 14:30:08','Successful Login'),
+(2, 1,'2024-09-30 12:28:58','Successful Login'),
+(3, 3,'2024-09-28 13:31:42','Successful Login'),
+(4, 3,'2024-09-30 16:35:45','Successful Login'),
+(5, 4,'2024-09-20 14:32:41','Successful Login'),
+(6, 4,'2024-09-26 15:35:48','Successful Login'),
+(7, 5,'2024-09-27 12:19:15','Successful Login'),
+(8, 5,'2024-09-27 14:21:38','Successful Login');
