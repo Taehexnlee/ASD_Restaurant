@@ -1,4 +1,4 @@
-# Installation Guide
+# Deployment Guide
 1. a
 
 2. b
