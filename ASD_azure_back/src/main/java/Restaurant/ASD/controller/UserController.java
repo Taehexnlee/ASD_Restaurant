@@ -58,17 +58,15 @@ public class UserController {
     }
 
     @PostMapping("/login")
-public ResponseEntity<?> loginUser(@RequestBody Map<String, String> loginData) {
-    String email = loginData.get("email");
-    String password = loginData.get("password");
-    User user = userRepository.findByEmail(email);
-    if (user != null && user.getPassword().equals(password)) {
-        return ResponseEntity.ok(user);
-    } else {
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email or password");
+    public ResponseEntity<?> loginUser(@RequestBody Map<String, String> loginData) {
+        String email = loginData.get("email");
+        String password = loginData.get("password");
+        User user = userRepository.findByEmail(email);
+        if (user != null && user.getPassword().equals(password)) {
+            return ResponseEntity.ok(user);
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email or password");
+        }
     }
-}
-
-
 
 }
