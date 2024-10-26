@@ -8,6 +8,7 @@ import ViewProduct from './products/ViewProduct';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useState } from 'react';
 import HomePage from './pages/HomePage';
+import AccountPage from './pages/AccountPage';
 import UserPage from './pages/UserPage';
 import AddUser from './Users/AddUser';
 import EditUser from './Users/EditUser';
@@ -31,6 +32,7 @@ function App() {
           <Routes>
             <Route exact path='/' element={<HomePage />} />
             <Route exact path='/productpage' element={<ProductPage />} />
+            <Route exact path='/accountpage/' element={<AccountPage />} />
             <Route exact path='/userpage' element={<UserPage />} />
             <Route exact path='/adduser' element={<AddUser />} />
             <Route exact path='/login' element={<Login />} />
