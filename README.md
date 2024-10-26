@@ -11,7 +11,9 @@
 
 6. f
 
-# Repository Structure The repository consists of two main parts: 
+# Repository Structure 
+
+The repository consists of two main parts: 
 - The frontend built with React.
   
 - The backend built with Spring Boot.
