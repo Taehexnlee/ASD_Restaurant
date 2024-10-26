@@ -22,7 +22,7 @@ export default function AccountPage() {
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
-      const result = await axios.put(`http://localhost:8080/user/${user.id}`, credentials); 
+      const result = await axios.put(`http://localhost:3000/user/${user.id}`, credentials); 
       //Correct user ID from frontend is being sent to backend, but backend isn't returning existing user 
       //Port number for frontend should be configured to 8080?? and backend port is 3000
       // Update the user in the context with the new user data
