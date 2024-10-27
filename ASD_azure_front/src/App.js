@@ -16,6 +16,7 @@ import { UserProvider } from './context/UserContext';
 import CartPage from './pages/CartPage';
 import Login from './Users/Login';
 import AccessLogsPage from './pages/AccessLogsPage';
+import OrdersPage from './pages/OrdersPage';
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
@@ -31,17 +32,18 @@ function App() {
           <Navbar darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
           <Routes>
             <Route exact path='/' element={<HomePage />} />
+            <Route exact path='/accesslogspage' element={<AccessLogsPage />} />
+            <Route exact path='/addproduct' element={<AddProduct />} />
+            <Route exact path='/adduser' element={<AddUser />} />
+            <Route exact path='/cart' element={<CartPage />} />
+            <Route exact path='/editproduct/:id' element={<EditProduct />} />
+            <Route exact path='/edituser/:id' element={<EditUser />} />
+            <Route exact path='/login' element={<Login />} />
+            <Route exact path='/orderspage' element={<OrdersPage />} />
             <Route exact path='/productpage' element={<ProductPage />} />
             <Route exact path='/userpage' element={<UserPage />} />
-            <Route exact path='/accesslogspage' element={<AccessLogsPage />} />
-            <Route exact path='/adduser' element={<AddUser />} />
-            <Route exact path='/login' element={<Login />} />
-            <Route exact path='/cart' element={<CartPage />} />
-            <Route exact path='/edituser/:id' element={<EditUser />} />
-            <Route exact path='/viewuser/:id' element={<ViewUser />} />
-            <Route exact path='/addproduct' element={<AddProduct />} />
-            <Route exact path='/editproduct/:id' element={<EditProduct />} />
             <Route exact path='/viewproduct/:id' element={<ViewProduct />} />
+            <Route exact path='/viewuser/:id' element={<ViewUser />} />
           </Routes>
         </Router>
       </div>
