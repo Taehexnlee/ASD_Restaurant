@@ -1,23 +1,76 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
-import { useUser } from '../context/UserContext';
 
 export default function AccessLogPage() {
     const [accessLogs, setAccessLogs] = useState([]);
-    const { user } = useUser(); // Get the current logged-in user
+    const [filteredAccessLogs, setFilteredAccessLogs] = useState([]);
+
+    const [filters, setFilters] = useState({ //Filter variables
+        email: "",
+        fromDate: "",
+        toDate: ""
+    });
+
+    const loadAccessLogs = async () => {
+        const result = await axios.get("http://localhost:8080/accesslogs");
+        setAccessLogs(result.data);
+        setFilteredAccessLogs(result.data); // Initialize filtered access logs
+    };
 
     useEffect(() => {
         loadAccessLogs();
     }, []);
 
-    const loadAccessLogs = async () => {
-        const result = await axios.get("http://localhost:8080/accesslogs");
-        setAccessLogs(result.data);
-    };
+    useEffect(() => { //Run handleFilterChange() when change detected in filter variables
+        const filterEmail = (accessLogs) => { //Filter by Email
+            if (filters.email !== "") {
+                return accessLogs.filter(accessLog => accessLog.user.email.startsWith(filters.email)); //filter by email
+            }
+            else {
+                return accessLogs;
+            }
+        }
+
+        const filterFromDate = (accessLogs) => { //Filter by From Date
+            if (filters.fromDate !== "") {
+                return accessLogs.filter(accessLog => (Date.parse(accessLog.date) - Date.parse(filters.fromDate)) >= 0);
+            }
+            else {
+                return accessLogs;
+            }
+        }
+
+        const filterToDate = (accessLogs) => { //Filter by To Date
+            if (filters.toDate !== "") {
+                return accessLogs.filter(accessLog => (Date.parse(accessLog.date) - Date.parse(filters.toDate)) <= 0);
+            }
+            else {
+                return accessLogs;
+            }
+        }
+
+        const handleFilterChange = (e) => { //Run all filters against access logs 
+            let filtered = accessLogs;
+            filtered = filterEmail(filtered);
+            filtered = filterFromDate(filtered);
+            filtered = filterToDate(filtered);
+            setFilteredAccessLogs(filtered);
+        }
+
+        handleFilterChange();
+    }, [filters, accessLogs]);
+
+    const filterChange = (e) => { //Update filter variables on input field change
+        setFilters({ ...filters, [e.target.name]: e.target.value });
+    }
 
     return (
         <div className="container">
+            <input onChange={filterChange} type="text" id="email" name="email" placeholder="Filter by email..." />
+            <label className="px-3" for="fromDate">From:</label>
+            <input onChange={filterChange} type="datetime-local" name="fromDate" />
+            <label className="px-3" for="toDate">To:</label>
+            <input onChange={filterChange} type="datetime-local" name="toDate" />
             <div className="py-4">
                 <table className="table border shadow">
                     <thead>
@@ -30,7 +83,7 @@ export default function AccessLogPage() {
                         </tr>
                     </thead>
                     <tbody>
-                        {accessLogs.map((accessLog, index) => (
+                        {filteredAccessLogs.map((accessLog, index) => (
                             <tr key={accessLog.id}>
                                 <th scope="row">{index + 1}</th>
                                 <td>{accessLog.user.id}</td>

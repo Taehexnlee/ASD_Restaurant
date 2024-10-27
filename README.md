@@ -99,4 +99,4 @@ The backend is located in the src/main/java/com/Restaurant/ASD/ folder and inclu
 
 ### Main Application:
 
-AsdApplication.java: The main entry point for the Spring Boot application.
+- AsdApplication.java: The main entry point for the Spring Boot application.
