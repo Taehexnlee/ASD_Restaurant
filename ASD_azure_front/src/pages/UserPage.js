@@ -59,6 +59,7 @@ export default function UserPage() {
           <thead>
             <tr>
               <th scope="col">S.N</th>
+              <th scope="col">ID</th>
               <th scope="col">Name</th>
               <th scope="col">Username</th>
               <th scope="col">Email</th>
@@ -69,6 +70,7 @@ export default function UserPage() {
             {filteredUsers.map((user, index) => (
               <tr key={user.id}>
                 <th scope="row">{index + 1}</th>
+                <td>{user.id}</td>
                 <td>{user.name}</td>
                 <td>{user.username}</td>
                 <td>{user.email}</td>
