@@ -40,9 +40,11 @@ export const UserProvider = ({ children }) => {
       )
     );
   };
-
+  const removeFromCart = (productId) => {
+    setCart((prevCart) => prevCart.filter((item) => item.id !== productId));
+  };
   return (
-    <UserContext.Provider value={{ user, cart, login, logout, addToCart, updateCartItemQuantity }}>
+    <UserContext.Provider value={{ user, cart, login, logout, addToCart, updateCartItemQuantity, removeFromCart }}>
       {children}
     </UserContext.Provider>
   );
