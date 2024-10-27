@@ -17,6 +17,7 @@ import CartPage from './pages/CartPage';
 import Login from './Users/Login';
 import AccessLogsPage from './pages/AccessLogsPage';
 import OrdersPage from './pages/OrdersPage';
+import AccountPage from './pages/AccountPage';
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
@@ -44,6 +45,7 @@ function App() {
             <Route exact path='/userpage' element={<UserPage />} />
             <Route exact path='/viewproduct/:id' element={<ViewProduct />} />
             <Route exact path='/viewuser/:id' element={<ViewUser />} />
+            <Route exact path='/accountpage/' element={<AccountPage />} />
           </Routes>
         </Router>
       </div>

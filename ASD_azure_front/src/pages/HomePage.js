@@ -12,6 +12,7 @@ export default function HomePage() {
         <h2>{user ? `Welcome, ${user.username}, to ASD Restaurant!` : 'Welcome to ASD Restaurant!'}</h2>
         <p>Experience the best of our cuisine. Order now and enjoy our specials!</p>
         {user && <Link className="btn btn-primary mt-3" to="/productpage">View Menu</Link>}
+        {user && <Link className="btn btn-primary mt-3" to="/accountpage">View Account</Link>}
       </div>
 
       {/* Featured Products (Logged-in users only) */}
