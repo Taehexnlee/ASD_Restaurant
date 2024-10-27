@@ -60,6 +60,9 @@ export default function Navbar({ darkMode, toggleDarkMode }) {
               { user.isAdmin && (
                 <Link className='btn btn-outline-primary ms-3' to="/accesslogspage">Access Logs Page</Link>
               )}
+              { user.isAdmin && (
+                <Link className='btn btn-outline-primary ms-3' to="/orderspage">Orders Page</Link>
+              )}
               <Link className='btn btn-outline-primary ms-3' to="/productpage">Product Page</Link>
               <button className='btn btn-outline-primary ms-3' onClick={handleLogout}>
                 Logout
