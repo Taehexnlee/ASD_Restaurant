@@ -31,15 +31,17 @@ The frontend is located in the src/ folder and contains the following key compon
 
 ### Layout:
 
-- Navbar.js: Contains the main navigation for the application, including links to different pages depending on user authentication (Login, Logout, Product, Users, AccessLogs).
+- Navbar.js: Contains the main navigation for the application, including links to different pages depending on user authentication (Login, Logout, Product, Users, AccessLogs, Orders).
 
 ### Pages:
 
-- AccessLogs.js: Displays a list of access logs and information associated.
+- AccessLogsPage.js: Displays a list of access logs and information associated + filtering.
 
 - CartPage.js: Displays the items added to the cart. 
 
 - HomePage.js: Home page of the application.
+
+- OrdersPage.js: Displays a list of orders and information associated + filtering.
 
 - ProductPage.js: Displays the list of restaurant products and allows filtering. 
 
@@ -74,6 +76,10 @@ The backend is located in the src/main/java/com/Restaurant/ASD/ folder and inclu
 - AccessLogController.java: Handles API requests for managing access logs.
 
 - ProductController.java: Handles API requests for managing products.
+
+- OrderController.java: Handles API requests for managing orders.
+
+- OrderItemController.java: Handles API requests for managing order items.
   
 - UserController.java: Manages user-related requests like login and user data.
 
@@ -88,12 +94,20 @@ The backend is located in the src/main/java/com/Restaurant/ASD/ folder and inclu
 
 - Product.java: Entity representing the product in the system.
 
+- Order.java: Entity representing the order in the system.
+
+- OrderItem.java: Entity representing the order item in the system.
+
 - User.java: Entity representing the user in the system.
 
 ### Repository:
 - AccessLogRepository.java: Interface for CRUD operations on the AccessLog entity.
 
 - ProductRepository.java: Interface for CRUD operations on the Product entity.
+
+- OrderItemRepository.java: Interface for CRUD operations on the OrderItem entity.
+
+- OrderRepository.java: Interface for CRUD operations on the Order entity.
 
 - UserRepository.java: Interface for CRUD operations on the User entity.
 
