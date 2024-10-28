@@ -59,6 +59,7 @@ export default function OrderItemsPage() {
                             <th scope="col">Product Name</th>
                             <th scope="col">Customisation</th>
                             <th scope="col">Quantity</th>
+                            <th scope="col">Total Price</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -69,6 +70,7 @@ export default function OrderItemsPage() {
                                 <td>{orderItem.product.name}</td>
                                 <td>{orderItem.customisation}</td>
                                 <td>{orderItem.quantity}</td>
+                                <td>${orderItem.quantity * orderItem.product.price}</td>
                             </tr>
                         ))}
                     </tbody>
