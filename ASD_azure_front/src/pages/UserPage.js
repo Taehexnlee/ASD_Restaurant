@@ -15,7 +15,7 @@ export default function UserPage() {
   useEffect(() => { //Run handleFilterChange() when change detected in filter variables
     const filterEmail = (users) => { //Filter by Email
       if (filters.email !== "") {
-        return users.filter(user => user.email.startsWith(filters.email)); //filter by email
+        return users.filter(user => user.email.toLowerCase().startsWith(filters.email.toLowerCase())); //filter by email
       }
       else {
         return users;
@@ -53,6 +53,7 @@ export default function UserPage() {
 
   return (
     <div className="container">
+      <h1>Viewing Users</h1>
       <input onChange={filterChange} type="text" id="email" name="email" placeholder="Filter by email..." />
       <div className="py-4">
         <table className="table border shadow">
