@@ -46,7 +46,7 @@ export default function ViewUser() {
             </div>
           </div>
           <Link className="btn btn-primary my-2" to={"/userpage"}>
-            Back to Home
+            Back to User Page
           </Link>
         </div>
       </div>
