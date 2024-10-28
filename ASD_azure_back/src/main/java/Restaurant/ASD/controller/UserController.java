@@ -1,19 +1,19 @@
 package Restaurant.ASD.controller;
 
-
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import Restaurant.ASD.exception.DuplicateEmailException;
 import Restaurant.ASD.exception.UserNotFoundException;
 import Restaurant.ASD.model.User;
 import Restaurant.ASD.repository.UserRepository;
 
 import java.util.List;
 
-/* Created by Arjun Gautam */
 @RestController
 @CrossOrigin("http://localhost:3000")
 public class UserController {
@@ -22,23 +22,33 @@ public class UserController {
     private UserRepository userRepository;
 
     @PostMapping("/user")
-    User newUser(@RequestBody User newUser) {
-        return userRepository.save(newUser);
+    public ResponseEntity<?> createUser(@RequestBody User newUser) {
+        try {
+            if (userRepository.existsByEmail(newUser.getEmail())) {
+                throw new DuplicateEmailException("This email is already used.");
+            }
+            User savedUser = userRepository.save(newUser);
+            return ResponseEntity.ok(savedUser);
+        } catch (DuplicateEmailException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        } catch (DataIntegrityViolationException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Data integrity violation: " + e.getMessage());
+        }
     }
 
     @GetMapping("/users")
-    List<User> getAllUsers() {
+    public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
     @GetMapping("/user/{id}")
-    User getUserById(@PathVariable Long id) {
+    public User getUserById(@PathVariable Long id) {
         return userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException(id));
     }
 
     @PutMapping("/user/{id}")
-    User updateUser(@RequestBody User newUser, @PathVariable Long id) {
+    public User updateUser(@RequestBody User newUser, @PathVariable Long id) {
         return userRepository.findById(id)
                 .map(user -> {
                     user.setUsername(newUser.getUsername());
@@ -49,12 +59,12 @@ public class UserController {
     }
 
     @DeleteMapping("/user/{id}")
-    String deleteUser(@PathVariable Long id){
-        if(!userRepository.existsById(id)){
+    public String deleteUser(@PathVariable Long id) {
+        if (!userRepository.existsById(id)) {
             throw new UserNotFoundException(id);
         }
         userRepository.deleteById(id);
-        return  "User with id "+id+" has been deleted success.";
+        return "User with id " + id + " has been deleted successfully.";
     }
 
     @PostMapping("/login")
@@ -68,5 +78,4 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email or password");
         }
     }
-
 }

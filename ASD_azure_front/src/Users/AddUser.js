@@ -22,13 +22,19 @@ export default function AddUser() {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    const result = await axios.post("http://localhost:8080/user", user);
-    
-    // Set user in context and determine if they are an admin
-    login(result.data);
+    try {
+        const result = await axios.post("http://localhost:8080/user", user);
+        login(result.data);
+        navigate("/"); // Redirect on successful registration
+    } catch (error) {
+        if (error.response && error.response.status === 400) {
+            alert("This email is already used.");
+        } else {
+            console.error("Registration error:", error);
+        }
+    }
+};
 
-    navigate("/"); // Redirect to the home page after registration
-  };
 
   return (
     <div className="container">
