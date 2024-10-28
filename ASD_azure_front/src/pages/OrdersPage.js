@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 export default function OrdersPage() {
     const [orders, setOrders] = useState([]);
     const [filteredOrders, setFilteredOrders] = useState([]);
+    const [orderItems, setOrderItems] = useState([]);
 
     const [filters, setFilters] = useState({ //Filter variables
         email: "",
@@ -18,8 +19,14 @@ export default function OrdersPage() {
         setFilteredOrders(result.data); // Initialize filtered orders
     };
 
+    const loadOrderItems = async () => {
+        const result = await axios.get("http://localhost:8080/orderitems");
+        setOrderItems(result.data);
+    };
+
     useEffect(() => {
         loadOrders();
+        loadOrderItems();
     }, []);
 
     useEffect(() => { //Run handleFilterChange() when change detected in filter variables
@@ -65,6 +72,15 @@ export default function OrdersPage() {
         setFilters({ ...filters, [e.target.name]: e.target.value });
     }
 
+    const getTotalPrice = (id) => {
+        let totalPrice = 0;
+        const filteredOrderItems = orderItems.filter(orderItem => orderItem.order.id - id === 0);
+        filteredOrderItems.forEach(orderItem => {
+            totalPrice += orderItem.quantity * orderItem.product.price;
+        });
+        return totalPrice;
+    }
+
     return (
         <div className="container">
             <h1>Viewing Orders History</h1>
@@ -82,6 +98,8 @@ export default function OrdersPage() {
                             <th scope="col">User Email</th>
                             <th scope="col">Date</th>
                             <th scope="col">Payment Type</th>
+                            <th scope="col">Total Price</th>
+                            <th scope="col">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -92,6 +110,7 @@ export default function OrdersPage() {
                                 <td>{order.user.email}</td>
                                 <td>{order.date}</td>
                                 <td>{order.paymentType}</td>
+                                <td>${getTotalPrice(order.id)}</td>
                                 <td>
                                     <Link className="btn btn-primary mx-2" to={`/orderitemspage/${order.id}/${order.user.name}`}>
                                         View
