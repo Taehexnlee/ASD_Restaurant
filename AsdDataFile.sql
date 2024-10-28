@@ -58,7 +58,7 @@ TRUNCATE TABLE `order_item`;
 
 INSERT INTO user (name, username, email, password) VALUES
 ('John Doe', 'jdoe', 'jdoe@example.com', '1234'),
-('1234', '1234', '1234@1234', '1234'),
+('1234', 'Admin', '1234@1234', '1234'),
 ('Jane Smith', 'jsmith', 'jsmith@example.com', '1234'),
 ('Alice Johnson', 'alicej', 'alicej@example.com', '1234'),
 ('Bob Brown', 'bbrown', 'bbrown@example.com', '1234'),

@@ -6,8 +6,9 @@ import { useUser } from '../context/UserContext';
 export default function ProductPage() {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const { user, addToCart } = useUser(); // Get user and addToCart from context
+  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [availabilityFilter, setAvailabilityFilter] = useState("All"); 
+  const { user, addToCart } = useUser();
 
   useEffect(() => {
     loadProducts();
@@ -17,21 +18,44 @@ export default function ProductPage() {
     try {
       const result = await axios.get("http://localhost:8080/products");
       setProducts(result.data);
-      setFilteredProducts(result.data); // Initialize filtered products
+      setFilteredProducts(result.data);
     } catch (error) {
       console.error("Error loading products:", error);
     }
   };
 
-  const handleCategoryChange = (e) => {
-    const category = e.target.value;
-    setSelectedCategory(category);
+  const handleCategoryToggle = (category) => {
+    setSelectedCategories((prevSelected) =>
+      prevSelected.includes(category)
+        ? prevSelected.filter((cat) => cat !== category) 
+        : [...prevSelected, category]
+    );
+  };
 
-    if (category === "") {
-      setFilteredProducts(products);
-    } else {
-      const filtered = products.filter(product => product.category === category);
-      setFilteredProducts(filtered);
+  const handleAvailabilityChange = (e) => setAvailabilityFilter(e.target.value);
+
+  const handleSearch = () => {
+    const filtered = products.filter((product) => {
+      const matchesCategories = selectedCategories.length === 0 || selectedCategories.includes(product.category);
+      const matchesAvailability = availabilityFilter === "All" || (availabilityFilter === "Available" && product.active);
+
+      return matchesCategories && matchesAvailability;
+    });
+    setFilteredProducts(filtered);
+  };
+
+  const toggleProductAvailability = async (id) => {
+    try {
+      const result = await axios.put(`http://localhost:8080/product/${id}/toggleAvailability`);
+      const updatedProduct = result.data;
+
+      setProducts((prevProducts) =>
+        prevProducts.map((product) => (product.id === updatedProduct.id ? updatedProduct : product))
+      );
+
+      handleSearch();
+    } catch (error) {
+      console.error("Error toggling product availability:", error);
     }
   };
 
@@ -45,24 +69,37 @@ export default function ProductPage() {
         </div>
       )}
 
-      {/* Category Filter */}
       <div className="my-3">
-        <label htmlFor="categoryFilter" className="form-label">Filter by Category:</label>
+        <label className="form-label">Filter by Category:</label>
+        <div className="d-flex flex-wrap">
+          {["Appetizers", "Main Courses", "Desserts", "Drinks", "Vegetarian", "Non-Vegetarian", "Gluten-Free"].map((category) => (
+            <button
+              key={category}
+              type="button"
+              className={`btn m-1 ${selectedCategories.includes(category) ? 'btn-primary' : 'btn-outline-primary'}`}
+              onClick={() => handleCategoryToggle(category)}
+            >
+              {category}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="my-3">
+        <label htmlFor="availabilityFilter" className="form-label">Filter by Availability:</label>
         <select
-          id="categoryFilter"
+          id="availabilityFilter"
           className="form-control"
-          value={selectedCategory}
-          onChange={handleCategoryChange}
+          value={availabilityFilter}
+          onChange={handleAvailabilityChange}
         >
-          <option value="">All Categories</option>
-          <option value="Appetizers">Appetizers</option>
-          <option value="Main Courses">Main Courses</option>
-          <option value="Desserts">Desserts</option>
-          <option value="Drinks">Drinks</option>
-          <option value="Vegetarian">Vegetarian</option>
-          <option value="Non-Vegetarian">Non-Vegetarian</option>
-          <option value="Gluten-Free">Gluten-Free</option>
+          <option value="All">All Products</option>
+          <option value="Available">Available Only</option>
         </select>
+      </div>
+
+      <div className="text-center my-3">
+        <button className="btn btn-primary" onClick={handleSearch}>Search</button>
       </div>
 
       <div className="row">
@@ -78,14 +115,23 @@ export default function ProductPage() {
                 <div className="card-body">
                   <h5 className="card-title">{product.name}</h5>
                   <p className="card-text"><strong>Price:</strong> ${product.price}</p>
+                  <p className="card-text"><strong>Status:</strong> {product.active ? "Available" : "Unavailable"}</p>
                 </div>
               </Link>
               <div className="card-footer">
-                {/* Conditionally render Add to Cart button for non-admin users */}
-                {user && !user.isAdmin && (
-                  <button className="btn btn-outline-primary w-100" onClick={() => addToCart(product)}>
-                    Add to Cart
+                {user && user.isAdmin ? (
+                  <button
+                    className={`btn ${product.active ? 'btn-primary' : 'btn-outline-secondary'} w-100`}
+                    onClick={() => toggleProductAvailability(product.id)}
+                  >
+                    {product.active ? "Set Inactive" : "Set Active"}
                   </button>
+                ) : (
+                  product.active && (
+                    <button className="btn btn-outline-primary w-100" onClick={() => addToCart(product)}>
+                      Add to Cart
+                    </button>
+                  )
                 )}
               </div>
             </div>
