@@ -48,12 +48,14 @@ export default function ProductPage() {
     try {
       const result = await axios.put(`http://localhost:8080/product/${id}/toggleAvailability`);
       const updatedProduct = result.data;
-
+  
       setProducts((prevProducts) =>
         prevProducts.map((product) => (product.id === updatedProduct.id ? updatedProduct : product))
       );
-
-      handleSearch();
+  
+      setFilteredProducts((prevFilteredProducts) =>
+        prevFilteredProducts.map((product) => (product.id === updatedProduct.id ? updatedProduct : product))
+      );
     } catch (error) {
       console.error("Error toggling product availability:", error);
     }
