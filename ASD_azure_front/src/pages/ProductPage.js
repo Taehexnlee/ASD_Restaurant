@@ -10,8 +10,8 @@ export default function ProductPage() {
   const [availabilityFilter, setAvailabilityFilter] = useState("All"); 
   const { user, addToCart } = useUser();
 
-  const [customisation] = useState(""); //empty customisation is default
-  const [quantity] = useState(1); //default quantity 1
+  const [customisation] = useState(""); //Empty customisation is default
+  const [quantity] = useState(1); //Default quantity 1
 
   useEffect(() => {
     loadProducts();

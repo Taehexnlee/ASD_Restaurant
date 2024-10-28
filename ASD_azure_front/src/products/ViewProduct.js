@@ -14,8 +14,8 @@ export default function ViewProduct() {
 
   const { id } = useParams();
   const { user, addToCart } = useUser(); // Get user and addToCart function
-  const [customisation, setCustomisation] = useState(""); //empty customisation is default
-  const [quantity, setQuantity] = useState(1); //default quantity 1
+  const [customisation, setCustomisation] = useState(""); //Empty customisation is default
+  const [quantity, setQuantity] = useState(1); //Default quantity 1
   let navigate = useNavigate();
 
   useEffect(() => {
