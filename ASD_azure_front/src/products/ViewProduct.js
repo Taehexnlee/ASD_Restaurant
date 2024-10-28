@@ -14,6 +14,8 @@ export default function ViewProduct() {
 
   const { id } = useParams();
   const { user, addToCart } = useUser(); // Get user and addToCart function
+  const [customisation, setCustomisation] = useState(""); //empty customisation is default
+  const [quantity, setQuantity] = useState(1); //default quantity 1
   let navigate = useNavigate();
 
   useEffect(() => {
@@ -29,6 +31,15 @@ export default function ViewProduct() {
     await axios.delete(`http://localhost:8080/product/${id}`);
     navigate("/productpage");
   };
+
+  const handleCustomisation = (e) => {
+    setCustomisation(e.target.value);
+  };
+
+  const handleQuantitySelection = (e) => {
+    setQuantity(parseInt(e.target.value));
+  };
+
 
   return (
     <div className='container'>
@@ -54,17 +65,46 @@ export default function ViewProduct() {
                   <b>Status:</b> {product.active ? "Available" : "Unavailable"}
                 </li>
               </ul>
-            </div>
-
-            {/* Conditionally render Add to Cart button only if product is active */}
-            {user && !user.isAdmin && product.active && (
-              <div className="card-footer">
-                <button className="btn btn-outline-primary w-100" onClick={() => addToCart(product)}>
-                  Add to Cart
-                </button>
-              </div>
-            )}
+            </div>            
           </div>
+
+          {/* Customisation, quantity selector and add to cart button rendered only if product is active */}
+          {user && !user.isAdmin && product.active && (
+            <div className="card-footer">
+              <div className="mb-3 mt-3">
+                <label className="form-label">Add Customisation (optional)</label>
+                <input 
+                  type="text" 
+                  className="form-control" 
+                  name="customisation"
+                  placeholder="Enter customisation" 
+                  value={customisation} 
+                  maxLength={60} 
+                  onChange={handleCustomisation}
+                />                
+              </div>
+            
+              <div className="mb-3">
+                <label className="form-label">Select Quantity</label>
+                <select 
+                  className="form-control" 
+                  name="quantity"
+                  value={quantity} 
+                  onChange={handleQuantitySelection}
+                >
+                  {[...Array(10).keys()].map((n) => (
+                    <option key={n + 1} value={n + 1}>
+                      {n + 1}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            
+              <button className="btn btn-outline-primary w-100" onClick={() => addToCart(product, customisation, quantity)}>
+                Add to Cart
+              </button>
+            </div>
+          )}      
 
           {/* Edit and Delete Buttons for Admin */}
           {user && user.isAdmin && (
@@ -74,7 +114,7 @@ export default function ViewProduct() {
             </div>
           )}
 
-          <Link className='btn btn-primary my-2' to={"/productpage"}>Back to Product Page</Link>
+          <Link className='btn btn-primary my-2 mt-4' to={"/productpage"}>Back to Product Page</Link>
         </div>
       </div>
     </div>

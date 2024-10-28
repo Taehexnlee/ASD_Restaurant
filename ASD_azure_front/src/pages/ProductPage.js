@@ -10,6 +10,9 @@ export default function ProductPage() {
   const [availabilityFilter, setAvailabilityFilter] = useState("All"); 
   const { user, addToCart } = useUser();
 
+  const [customisation] = useState(""); //empty customisation is default
+  const [quantity] = useState(1); //default quantity 1
+
   useEffect(() => {
     loadProducts();
   }, []);
@@ -130,7 +133,7 @@ export default function ProductPage() {
                   </button>
                 ) : (
                   product.active && (
-                    <button className="btn btn-outline-primary w-100" onClick={() => addToCart(product)}>
+                    <button className="btn btn-outline-primary w-100" onClick={() => addToCart(product, customisation, quantity)}>
                       Add to Cart
                     </button>
                   )

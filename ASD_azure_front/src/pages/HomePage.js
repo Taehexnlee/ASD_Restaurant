@@ -11,7 +11,7 @@ export default function HomePage() {
       <div className="hero-section text-center">
         <h2>{user ? `Welcome, ${user.username}, to ASD Restaurant!` : 'Welcome to ASD Restaurant!'}</h2>
         <p>Experience the best of our cuisine. Order now and enjoy our specials!</p>
-        {user && <Link className="btn btn-primary mt-3" to="/productpage">View Menu</Link>}
+        {user && <Link className="btn btn-primary mt-3 me-2" to="/productpage">View Menu</Link>}
         {user && <Link className="btn btn-primary mt-3" to="/accountpage">View Account</Link>}
       </div>
 
