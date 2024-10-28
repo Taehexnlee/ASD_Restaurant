@@ -17,6 +17,7 @@ import CartPage from './pages/CartPage';
 import Login from './Users/Login';
 import AccessLogsPage from './pages/AccessLogsPage';
 import OrdersPage from './pages/OrdersPage';
+import OrderItemsPage from './pages/OrderItemsPage';
 import AccountPage from './pages/AccountPage';
 
 function App() {
@@ -40,6 +41,7 @@ function App() {
             <Route exact path='/editproduct/:id' element={<EditProduct />} />
             <Route exact path='/edituser/:id' element={<EditUser />} />
             <Route exact path='/login' element={<Login />} />
+            <Route exact path='/orderitemspage/:id/:name' element={<OrderItemsPage />} />
             <Route exact path='/orderspage' element={<OrdersPage />} />
             <Route exact path='/productpage' element={<ProductPage />} />
             <Route exact path='/userpage' element={<UserPage />} />

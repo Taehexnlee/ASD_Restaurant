@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 export default function OrdersPage() {
     const [orders, setOrders] = useState([]);
@@ -24,7 +25,7 @@ export default function OrdersPage() {
     useEffect(() => { //Run handleFilterChange() when change detected in filter variables
         const filterEmail = (orders) => { //Filter by Email
             if (filters.email !== "") {
-                return orders.filter(order => order.user.email.startsWith(filters.email)); //filter by email
+                return orders.filter(order => order.user.email.toLowerCase().startsWith(filters.email.toLowerCase()));
             }
             else {
                 return orders;
@@ -66,6 +67,7 @@ export default function OrdersPage() {
 
     return (
         <div className="container">
+            <h1>Viewing Orders History</h1>
             <input onChange={filterChange} type="text" id="email" name="email" placeholder="Filter by email..." />
             <label className="px-3" for="fromDate">From:</label>
             <input onChange={filterChange} type="datetime-local" name="fromDate" />
@@ -90,6 +92,11 @@ export default function OrdersPage() {
                                 <td>{order.user.email}</td>
                                 <td>{order.date}</td>
                                 <td>{order.paymentType}</td>
+                                <td>
+                                    <Link className="btn btn-primary mx-2" to={`/orderitemspage/${order.id}/${order.user.name}`}>
+                                        View
+                                    </Link>
+                                </td>
                             </tr>
                         ))}
                     </tbody>

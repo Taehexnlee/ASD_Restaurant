@@ -24,7 +24,7 @@ export default function AccessLogsPage() {
     useEffect(() => { //Run handleFilterChange() when change detected in filter variables
         const filterEmail = (accessLogs) => { //Filter by Email
             if (filters.email !== "") {
-                return accessLogs.filter(accessLog => accessLog.user.email.startsWith(filters.email)); //filter by email
+                return accessLogs.filter(accessLog => accessLog.user.email.startsWith(filters.email));
             }
             else {
                 return accessLogs;
@@ -66,6 +66,7 @@ export default function AccessLogsPage() {
 
     return (
         <div className="container">
+            <h1>Viewing Access Logs</h1>
             <input onChange={filterChange} type="text" id="email" name="email" placeholder="Filter by email..." />
             <label className="px-3" for="fromDate">From:</label>
             <input onChange={filterChange} type="datetime-local" name="fromDate" />
