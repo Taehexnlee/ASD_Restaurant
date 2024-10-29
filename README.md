@@ -51,15 +51,18 @@ The frontend is located in the src/ folder and contains the following key compon
 
 - AddProduct.js: Admin interface to add new products.
 
-- AddUser.js: Interface for user registration.
-
 - EditProduct.js: Admin interface to edit existing products. 
+
+- ViewProduct.js: Allows users to view product details. Users:
+
+
+### Users:
+
+- AddUser.js: Interface for user registration.
 
 - EditUser.js: Admin interface to edit user information.
 
 - Login.js: User login interface. 
-
-- ViewProduct.js: Allows users to view product details. Users:
 
 - ViewUser.js: Admin view for user details. 
 
