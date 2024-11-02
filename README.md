@@ -1,15 +1,13 @@
 # Deployment Guide
-1. a
+1. Install npm and MySQL on your system.
 
-2. b
+2. Execute the AsdDataFile.sql file in MySQL to set up the database.
 
-3. c
+3. Inside a terminal, change directory to ASD_azure_front and run ```npm install``` to install dependencies.
 
-4. d
+4. Inside the same directory, run ```npm start``` to start the front end.
 
-5. e
-
-6. f
+5. Use an IDE such as Visual Studio Code to run the back end.
 
 # Repository Structure 
 
