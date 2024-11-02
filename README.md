@@ -1,7 +1,7 @@
 # Deployment Guide
 1. Install the latest versions of npm, java and MySQL on your system.
 
-2. Execute the AsdDataFile.sql file in MySQL to set up the database.
+2. Execute the AsdDataFile.sql file in MySQL to set up the database. Ensure that username is 'root' and password is 'dlxogjs218@'.
 
 3. Inside a terminal, change directory to ASD_azure_front and run ```npm install``` to install dependencies.
 
