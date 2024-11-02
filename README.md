@@ -1,5 +1,5 @@
 # Deployment Guide
-1. Install npm and MySQL on your system.
+1. Install the latest versions of npm, java and MySQL on your system.
 
 2. Execute the AsdDataFile.sql file in MySQL to set up the database.
 
